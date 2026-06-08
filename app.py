@@ -44,7 +44,7 @@ with tab1:
             p_level = 1 if "Faculty" in priority else 2
             # Sobia's exact logic: Append and sort
             st.session_state.gate_queue.append({"car_name": car_name, "priority": p_level})
-            st.session_state.gate_queue.sort(key=lambda x: x["priority"])
+            #st.session_state.gate_queue.sort(key=lambda x: x["priority"])
             st.success(f"🚗 Arrived: {car_name}")
             
     with col2:
