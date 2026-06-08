@@ -38,13 +38,13 @@ with tab1:
     col1, col2 = st.columns(2)
     with col1:
         car_name = st.text_input("Car Name:", value="Student Car A", key="g1")
+        # Priority UI mojood hai lekin backend par FCFS chal raha hai
         priority = st.selectbox("Priority Level:", ["1 - Faculty", "2 - Student"])
         
         if st.button("Add Car to Queue"):
             p_level = 1 if "Faculty" in priority else 2
-            # Sobia's exact logic: Append and sort
+            # FCFS Logic: Sirf append ho raha hai, sort nahi ho raha
             st.session_state.gate_queue.append({"car_name": car_name, "priority": p_level})
-            #st.session_state.gate_queue.sort(key=lambda x: x["priority"])
             st.success(f"🚗 Arrived: {car_name}")
             
     with col2:
@@ -58,13 +58,12 @@ with tab1:
             
         if st.button("Process Gate (Open Gate)"):
             if len(st.session_state.gate_queue) > 0:
-                # Connection Logic: Pehle check karein spots available hain ya nahi
                 if st.session_state.available_spots > 0:
+                    # FCFS: Hamesha index 0 (jo pehle aya) pop hoga
                     entering_car = st.session_state.gate_queue.pop(0)
-                    st.session_state.available_spots -= 1  # Spot kam ho gaya
+                    st.session_state.available_spots -= 1  
                     st.success(f"✅ Gate Opened: {entering_car['car_name']} has entered the garage.")
                 else:
-                    # Agar spots 0 hain toh gate nahi khulega (Semaphore constraint)
                     st.error("❌ Gate Cannot Open: Garage full hai! Semaphore value 0 hai.")
             else:
                 st.warning("Gate is idle. No cars waiting.")
